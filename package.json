@@ -1,0 +1,23 @@
+{
+  "name": "glassdoor-bot",
+  "version": "0.0.1",
+  "description": "App to collect data from companies on Glassdoor and analyze it in a funny way",
+  "main": "main.js",
+  "scripts": {
+    "start": "nodemon main.js -e html,js,css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/squadmerosmortais/glassdoor-bot.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/squadmerosmortais/glassdoor-bot/issues"
+  },
+  "homepage": "https://github.com/squadmerosmortais/glassdoor-bot#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

@@ -1,12 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glassdor Bot \o</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glassdor Bot \o</title>
+  <link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+
+  <style>
+    html, body {
+      font-family: Roboto;
+      color: gray;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /*body {
+      background: #c4c3b7;
+    }*/
+
+    input:focus {
+      outline: none;
+    }
+
+    .title-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 0 30px 0;
+    }
+
+    .title {
+      color: grey;
+      font-size: 40px;
+      font-weight: bold;
+      margin: 0 20px 0 0;
+      padding-top: 10px;
+    }
+
+    .wrapper {
+      margin: 50px 450px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .search-box {
+      margin: 0 0 80px 0;
+    }
+
+    .search-input {
+      border: none;
+      border-radius: 4px;
+      color: gray;
+      font-size: 24px;
+      letter-spacing: 2px;
+      padding: 10px;
+      width: 500px;
+      box-shadow: 0 2px 5px 0 gray;
+    }
+
+    .search-input::placeholder {
+      color: #a1a1a1;
+    }
+
+    .company-box {
+      box-shadow: 0 2px 5px 0 gray;
+      padding: 40px;
+      width: 100%;
+      margin: 0 100px 50px 100px;
+    }
+
+    .company-name {
+      font-size: 24px;
+      color: gray;
+    }
+    
+    .no-data-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .no-data-title {
+      color: black;
+      font-size: 40px;
+      font-weight: bold;
+      font-style: italic;
+      margin: 0;
+    }
+
+    .no-data-description {
+      font-size: 24px;
+      margin: 20px 0 0 20px;
+    }
+  </style>
 </head>
+
 <body>
-    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At iste illo quaerat consectetur accusamus eum sint ipsum, odio voluptatem animi unde dolore perspiciatis ratione ullam dignissimos ipsam sunt iusto doloribus.</p>
+  <div id="app">
+    <section class="wrapper">
+      <div class="title-box">
+        <h1 class="title">glassdoor BOT</h1>
+        <img src="https://image.flaticon.com/icons/png/512/1248/1248480.png" width="50" height="50" />
+      </div>
+      <div class="search-box">
+        <input v-model="searchTerm" type="text" class="search-input" placeholder="Busque pelo nome das empresas ;)" />
+      </div>
+      <template v-if="filteredCompanies.length > 0 ">
+        <div class="no-data-box">
+          <p class="no-data-title">OOPS!</p>
+          <p class="no-data-description">Nenhum resultado encontrado.</p>
+        </div>
+      </template>
+      <template v-else>
+        <div class="company-box" v-for="company in filteredCompanies" :key="company.id">
+          <p class="company-name">{{ company.name }}</p>
+          <!-- <p class="company-rating">{{ company.rating }}</p> -->
+        </div>
+      </template>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        searchTerm: '',
+        companies: [],
+      },
+      async mounted() {
+        this.companies = await this.fetchCompanies()
+      },
+      computed: {
+        filteredCompanies() {
+          let filtered = this.companies
+          if (this.searchTerm) {
+            filtered = filtered.filter(company => 
+              company.name.toLowerCase().includes(this.searchTerm.toLowerCase()))
+          }
+          return filtered
+        },
+      },
+      methods: {
+        async fetchCompanies() {
+          return new Promise((resolve, reject) => {
+            resolve([
+              { id: 1, name: 'Empresa 1' },
+              { id: 2, name: 'Empresa 2' },
+              { id: 3, name: 'Empresa 3' },
+              { id: 4, name: 'Empresa 4' },
+              { id: 5, name: 'Empresa 5' },
+              { id: 6, name: 'Empresa 6' },
+            ])
+          })
+        },
+      },
+    })
+  </script>
 </body>
 </html>
